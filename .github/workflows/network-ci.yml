@@ -19,6 +19,28 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Start Batfish
+        run: |
+          docker run -d \
+            --name batfish \
+            -p 9996:9996 \
+            batfish/batfish:latest
+
+      - name: Wait for Batfish
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:9996/v2/ > /dev/null; then
+              echo "Batfish is ready"
+              exit 0
+            fi
+            echo "Waiting for Batfish..."
+            sleep 2
+          done
+
+          echo "Batfish did not become ready"
+          docker logs batfish
+          exit 1
+
       - name: Install dependencies
         run: |
           python -m pip install -r requirements.txt
