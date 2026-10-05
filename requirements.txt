@@ -1,2 +1,4 @@
 pytest
 pybatfish
+netmiko
+paramiko==3.4.0
