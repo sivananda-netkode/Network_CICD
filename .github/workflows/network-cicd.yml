@@ -40,3 +40,6 @@ jobs:
       - name: Run tests
         run: |
           .venv-ci/bin/python -m pytest -v tests
+      - name: Deploy configuration
+        run: |
+          .venv-ci/bin/python scripts/deploy.py
