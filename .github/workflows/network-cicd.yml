@@ -27,11 +27,10 @@ jobs:
       - name: Install dependencies
         run: |
           .venv-ci/bin/pip install -r requirements.txt
-
       - name: Check Batfish
         run: |
           docker ps
-          curl -I http://localhost:9996 || true
+          curl -s http://localhost:9996/v2/version
 
       - name: Show files
         run: |
