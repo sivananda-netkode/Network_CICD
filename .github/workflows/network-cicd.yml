@@ -12,20 +12,27 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
+
+      - name: Check Python
+        run: |
+          python3.13 --version
+          python3.13 -m pip --version
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python3.13 -m pip install --upgrade pip
+          python3.13 -m pip install -r requirements.txt
+
+      - name: Check Batfish
+        run: |
+          docker ps
+          curl -I http://localhost:9996 || true
 
       - name: Show files
         run: |
           pwd
           ls -R
+
       - name: Run tests
         run: |
-          pytest -v tests
+          python3.13 -m pytest -v tests
